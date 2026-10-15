@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 5th Month Anniversary! ❤️</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #ff6b81;
+            --secondary-color: #ff4757;
+            --bg-color: #fff5f6;
+            --card-bg: #ffffff;
+            --text-color: #2f3542;
+            --light-pink: #ffe0e6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff5f6 0%, #ffe0e6 100%);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Floating Hearts Background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: rgba(255, 107, 129, 0.3);
+            animation: floatUp 8s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Interactive Welcome Gate Overlay */
+        #interactiveGate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 245, 246, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 0.5s ease;
+        }
+
+        .gate-card {
+            background: #ffffff;
+            padding: 35px 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255, 107, 129, 0.2);
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+            border: 2px solid var(--light-pink);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .gate-card h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .gate-card p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .pin-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 5px;
+            border: 2px solid var(--light-pink);
+            border-radius: 25px;
+            outline: none;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .pin-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .gate-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 129, 0.4);
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .gate-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2deg);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-btn {
+            background: var(--bg-color);
+            border: 1.5px solid var(--light-pink);
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        .quiz-btn:hover {
+            background: var(--light-pink);
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .trick-btn {
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .error-msg {
+            color: var(--secondary-color);
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Container & Layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 0 30px;
+        }
+
+        .main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        /* Simple Card Highlight */
+        .anniversary-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(255, 107, 129, 0.15);
+            text-align: center;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .anniversary-card h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .anniversary-card p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Envelope Section */
+        .letter-section {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .envelope-wrapper {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 2px dashed var(--light-pink);
+        }
+
+        .envelope-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 129, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .envelope-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2deg);
+        }
+
+        .letter-content {
+            display: none;
+            padding: 20px 10px 10px;
+            text-align: left;
+            animation: fadeIn 0.8s ease forwards;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10deg); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--secondary-color);
+            margin: 50px 0 30px;
+        }
+
+        /* Interactive Photo Gallery (Polaroid Grid) */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            padding: 10px;
+            justify-items: center;
+        }
+
+        .polaroid-card {
+            background: #ffffff;
+            padding: 12px 12px 25px 12px;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            width: 100%;
+            max-width: 230px;
+        }
+
+        .polaroid-card:nth-child(odd) {
+            transform: rotate(-3deg);
+        }
+        .polaroid-card:nth-child(even) {
+            transform: rotate(3deg);
+        }
+        .polaroid-card:nth-child(3n) {
+            transform: rotate(-1.5deg);
+        }
+
+        .polaroid-card:hover {
+            transform: scale(1.08) rotate(0deg) translateY(-8px);
+            box-shadow: 0 18px 30px rgba(255, 107, 129, 0.25);
+            z-index: 10;
+        }
+
+        .polaroid-img-wrapper {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 4px;
+            background: #f0f0f0;
+        }
+
+        .polaroid-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .polaroid-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .polaroid-badge {
+            position: absolute;
+            bottom: 6px;
+            right: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            opacity: 0.8;
+        }
+
+        /* Fullscreen Image Modal (Lightbox) */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .close-modal:hover {
+            transform: scale(1.2);
+            color: var(--primary-color);
+        }
+
+        /* Music Floating Button */
+        .music-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 99;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @media screen and (max-width: 600px) {
+            .main-title {
+                font-size: 2.8rem;
+            }
+            .photo-gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .polaroid-card {
+                max-width: 100%;
+            }
+            .polaroid-img-wrapper {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Hearts -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- Interaktif Sebelum Masuk Halaman (Welcome Gate) -->
+    <div id="interactiveGate">
+        <!-- Tahap 1: Masukkan Kode -->
+        <div class="gate-card" id="stepPasscode">
+            <i class="fa-solid fa-lock" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+            <h2>Akses Rahasia Bosyil</h2>
+            <p>Masukkan kode rahasia untuk masuk</p>
+            <input type="password" id="passcodeInput" class="pin-input" placeholder="••••" maxlength="4">
+            <button class="gate-btn" onclick="checkPasscode()">Buka Kunci ❤️</button>
+            <div class="error-msg" id="pinError">Kode salah sayanggkuu! Coba lagi yashhh, clue nya rokaville</div>
+        </div>
+
+        <!-- Tahap 2: Kuis Pertanyaan 1 -->
+        <div class="gate-card" id="stepQuiz1" style="display: none;">
+            <i class="fa-solid fa-heart-circle-check" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+            <h2>Kuis Momen #1</h2>
+            <p>Dimanakah tempat pertama kali kita ketemu?</p>
+            <div class="quiz-options">
+                <button class="quiz-btn" onclick="answerQuiz(1, false)">Di purwoloyo</button>
+                <button class="quiz-btn" onclick="answerQuiz(1, true)">Di rumahnya mba Vera</button>
+                <button class="quiz-btn" onclick="answerQuiz(1, false)">Di kelurahan</button>
+            </div>
+            <div class="error-msg" id="quiz1Error">Tetot! Jawaban salah, coba ingat lagi pas awal ketemu!</div>
+        </div>
+
+        <!-- Tahap 3: Kuis Pertanyaan 2 -->
+        <div class="gate-card" id="stepQuiz2" style="display: none;">
+            <i class="fa-solid fa-calendar-heart" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+            <h2>Kuis Momen #2</h2>
+            <p>Sudah berapa bulan hubungan kita berjalan?</p>
+            <div class="quiz-options">
+                <button class="quiz-btn" onclick="answerQuiz(2, false)">3 Bulan</button>
+                <button class="quiz-btn" onclick="answerQuiz(2, true)">5 Bulan</button>
+                <button class="quiz-btn" onclick="answerQuiz(2, false)">1 Abad</button>
+            </div>
+            <div class="error-msg" id="quiz2Error">Wooo masa salah? Coba lagi sayangg</div>
+        </div>
+
+        <!-- Tahap 4: Kuis Pertanyaan 3 -->
+        <div class="gate-card" id="stepQuiz3" style="display: none;">
+            <i class="fa-solid fa-crown" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+            <h2>Kuis Momen #3</h2>
+            <p>Siapa panggilan kesayangan yang bikin surat ini?</p>
+            <div class="quiz-options">
+                <button class="quiz-btn" onclick="answerQuiz(3, true)">Bosyil</button>
+                <button class="quiz-btn" onclick="answerQuiz(3, false)">Valentino Rossi</button>
+                <button class="quiz-btn" onclick="answerQuiz(3, false)">Fausta</button>
+            </div>
+            <div class="error-msg" id="quiz3Error">Tetot! Salah panggil hmmzzz!</div>
+        </div>
+
+        <!-- Tahap 5: Kuis Pertanyaan 4 -->
+        <div class="gate-card" id="stepQuiz4" style="display: none;">
+            <i class="fa-solid fa-music" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+            <h2>Kuis Momen #4</h2>
+            <p>Apa sayur favorite Alexa?</p>
+            <div class="quiz-options">
+                <button class="quiz-btn" onclick="answerQuiz(4, true)">Brokoli</button>
+                <button class="quiz-btn" onclick="answerQuiz(4, true)">Batu</button>
+                <button class="quiz-btn" onclick="answerQuiz(4, false)">Kayu</button>
+            </div>
+            <div class="error-msg" id="quiz4Error">Masa salah e?, coba tebak lagi! 🎵</div>
+        </div>
+
+        <!-- Tahap 6: Kuis Pertanyaan 5 -->
+        <div class="gate-card" id="stepQuiz5" style="display: none;">
+            <i class="fa-solid fa-face-smile-beam" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+            <h2>Kuis Momen #5</h2>
+            <p>Siapa yang paling kangenan di hubungan ini?</p>
+            <div class="quiz-options" style="position: relative; min-height: 180px;">
+                <button class="quiz-btn" onclick="answerQuiz(5, true)">Elmin</button>
+                <button class="quiz-btn" onclick="answerQuiz(5, true)">Aurel Dhinta Valencia</button>
+                <button class="quiz-btn trick-btn" id="runawayBtn" onmouseover="moveButton()" onclick="moveButton()">Valentino Fausta</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Halaman Utama -->
+    <div class="container" id="mainContainer">
+        <!-- Header -->
+        <header>
+            <h1 class="main-title">Happy 5th Month Elmin!</h1>
+            <p class="subtitle">I was enchanted to meet you❤️</p>
+        </header>
+
+        <!-- Anniversary Message Box -->
+        <div class="anniversary-card">
+            <h2>Pengantar dari Bosyilmu Tersayang</h2>
+            <p> Sebelum baca surat dari aku, terimakasih banyakkk sudah menjalani hubungan denganku selama 5 bulan ini sayangg, aku sangat bersyukur dan beruntung bisa dipertemukan dengan kamu. Untuk selanjutnya di surat yaaa!</p>
+        </div>
+
+        <!-- Interactive Letter -->
+        <div class="letter-section">
+            <div class="envelope-wrapper">
+                <i class="fa-solid fa-envelope-open-text" style="font-size: 3rem; color: var(--primary-color);"></i>
+                <h2 style="margin-top: 10px; font-weight: 600;">Surat Spesial untuk Aurel Dhinta Valencia</h2>
+                <p style="color: #777; font-size: 0.9rem;">Klik tombol di bawah untuk membuka pesan bosyil</p>
+               
+                <button class="envelope-btn" onclick="toggleLetter()">
+                    <i class="fa-solid fa-heart"></i> Buka Surat
+                </button>
+
+                <div class="letter-content" id="letterContent">
+                    <hr style="border: none; border-top: 1px solid var(--light-pink); margin: 20px 0;">
+                   
+                    <p><strong>Halooo Sayanggg,</strong></p><br>
+                    <p>Selamat untuk kita yang sudah menjalankan hubungan sampai ke-5 bulan ini! seperti dipengantar, bosyill sungguh bersyukur dan beruntung bisa dipertemukan dengan kamuu sayangg. dari awal salim di rumahnya mba Vera, masih belum akrab satu sama lain. Ehhh tau-tau deket dan jadian kita WKKWKWKW.</p><br>
+                    <p>Terimakasihh sudah menjadi bagian terindah dalam diriku. Terima kasih atas semua kebahagiaan, perhatian, kesabaran, dan kasih sayang yang selalu kamu berikan. Terimakasih juga buat hari-hari yang sudah kita lewatin baik buruknya keadaan. Terimakasih juga udah selalu support satu sama lain sayanggg.</p><br>
+                    <p>Semoga kita terus saling bersama yaaa sayangg, mungkin disaat diantara kita berdua lagi ada problem, kita tetap hadir dan saling mengerti satu sama lain. Semoga kita bisa lewatin apapun problemnya itu bersama-sama dan tetap saling menjaga komunikasi dengan baik yaaa, tetap support satu sama lain yaaa sayangg, berproses bersama-sama. Maaf jika sejauh ini didalam hubungan kita bosyil ada sikap yang kurang berkenan atau kurang membuat sayangg nyaman. apapun yang kurang baik itu bakal bosyil ubah kedepannya agar tidak menyakiti perasaanmu sayangg. Saling jaga hati dan jaga hubungan ini selalu yaaa sayangg, biar apa yang kita impikan berdua bisa terwujud.</p><br>
+                    <p>Untuk kamuu sayangg, semoga selalu dilancarkan dari segala urusannya yaaa, dilimpahkan rejekinya, dan dikuatkan dalam kondisi apapun. Ingat yaaa sayangg, kamu punya aku disini, jadi kalau ada apa-apa atau kalau lagi butuh sesuatu bilang sama bosyil yaaa. Jangan pernah merasa sendiri yaaa. Semoga dikerjaan dilancarkan semua segala urusannya yaaa, semangattt terus kerjanya sayangg. Tolong kesehatannya sayangg juga dijaga yaaa, sayangg kalau sakit bosyil khawatir e, jangan telat makan yaaa.</p><br>
+                    <p>evol u sayanggkuuuu</p><br>
+                    <p style="text-align: right;"><strong>Dengan tulus hati,</strong><br> Valentino Fausta H.A</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Photo Gallery -->
+        <h2 class="section-title">Photo Recap</h2>
+        <div class="photo-gallery">
+            <div class="polaroid-card" onclick="openModal(this)">
+                <div class="polaroid-img-wrapper">
+                    <img src="elmin1.jpg" alt="Momen 1">
+                </div>
+                <span class="polaroid-badge">💕 1</span>
+            </div>
+
+            <div class="polaroid-card" onclick="openModal(this)">
+                <div class="polaroid-img-wrapper">
+                    <img src="elmin2.png" alt="Momen 2">
+                </div>
+                <span class="polaroid-badge">💕 2</span>
+            </div>
+
+            <div class="polaroid-card" onclick="openModal(this)">
+                <div class="polaroid-img-wrapper">
+                    <img src="elmin3.jpg" alt="Momen 3">
+                </div>
+                <span class="polaroid-badge">💕 3</span>
+            </div>
+
+            <div class="polaroid-card" onclick="openModal(this)">
+                <div class="polaroid-img-wrapper">
+                    <img src="elmin4.jpg" alt="Momen 4">
+                </div>
+                <span class="polaroid-badge">💕 4</span>
+            </div>
+
+            <div class="polaroid-card" onclick="openModal(this)">
+                <div class="polaroid-img-wrapper">
+                    <img src="elmin5.jpg" alt="Momen 5">
+                </div>
+                <span class="polaroid-badge">💕 5</span>
+            </div>
+
+            <div class="polaroid-card" onclick="openModal(this)">
+                <div class="polaroid-img-wrapper">
+                    <img src="elmin6.jpg" alt="Momen 6">
+                </div>
+                <span class="polaroid-badge">💕 6</span>
+            </div>
+        </div>
+
+        <footer style="text-align: center; padding: 40px 0 20px; color: #888; font-size: 0.85rem;">
+            Dibuat dengan ❤️ khusus untuk Aurel Dhinta Valencia.
+        </footer>
+    </div>
+
+    <!-- Fullscreen Image Modal -->
+    <div class="image-modal" id="imageModal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <!-- Music Player Button -->
+    <button class="music-btn" onclick="toggleMusic()" id="musicBtn" title="Putar Musik">
+        <i class="fa-solid fa-music"></i>
+    </button>
+
+    <audio id="bgMusic" loop src="enchanted.mp3"></audio>
+
+    <script>
+        const CORRECT_PIN = "2305";
+
+        function checkPasscode() {
+            const input = document.getElementById('passcodeInput').value;
+            const errorMsg = document.getElementById('pinError');
+            
+            if (input === CORRECT_PIN) {
+                errorMsg.style.display = 'none';
+                document.getElementById('stepPasscode').style.display = 'none';
+                document.getElementById('stepQuiz1').style.display = 'block';
+                if (typeof confetti === "function") confetti({ particleCount: 20, spread: 50 });
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function answerQuiz(quizNum, isCorrect) {
+            const currentErr = document.getElementById(`quiz${quizNum}Error`);
+            
+            if (isCorrect) {
+                if (currentErr) currentErr.style.display = 'none';
+                document.getElementById(`stepQuiz${quizNum}`).style.display = 'none';
+                
+                if (quizNum < 5) {
+                    document.getElementById(`stepQuiz${quizNum + 1}`).style.display = 'block';
+                    if (typeof confetti === "function") confetti({ particleCount: 30, spread: 60 });
+                } else {
+                    // Selesai Kuis, sembunyikan gerbang overlay
+                    const gate = document.getElementById('interactiveGate');
+                    gate.style.display = 'none';
+                    
+                    if (typeof confetti === "function") {
+                        confetti({
+                            particleCount: 120,
+                            spread: 80,
+                            origin: { y: 0.5 }
+                        });
+                    }
+
+                    toggleMusic();
+                }
+            } else {
+                if (currentErr) currentErr.style.display = 'block';
+            }
+        }
+
+        let dodgeCount = 0;
+
+        function moveButton() {
+            const btn = document.getElementById('runawayBtn');
+            dodgeCount++;
+
+            if (dodgeCount <= 2) {
+                const randomX = (Math.random() - 0.5) * 160; 
+                const randomY = (Math.random() - 0.5) * 80;  
+
+                btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            } else {
+                btn.style.opacity = '0';
+                btn.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    btn.style.display = 'none';
+                }, 300);
+            }
+        }
+
+        function openModal(element) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const imgSource = element.querySelector('img').src;
+            
+            modal.style.display = "flex";
+            modalImg.src = imgSource;
+
+            if (typeof confetti === "function") {
+                confetti({
+                    particleCount: 30,
+                    spread: 40,
+                    origin: { y: 0.5 }
+                });
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = "none";
+        }
+
+        function toggleLetter() {
+            const content = document.getElementById('letterContent');
+            const btn = document.querySelector('.envelope-btn');
+           
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                btn.innerHTML = '<i class="fa-solid fa-heart"></i> Buka Surat';
+            } else {
+                content.style.display = 'block';
+                btn.innerHTML = '<i class="fa-solid fa-envelope-open"></i> Tutup Surat';
+               
+                if (typeof confetti === "function") {
+                    confetti({
+                        particleCount: 80,
+                        spread: 60,
+                        origin: { y: 0.6 }
+                    });
+                }
+            }
+        }
+
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicBtn.innerHTML = '<i class="fa-solid fa-music"></i>';
+            } else {
+                music.play().then(() => {
+                    musicBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                }).catch(err => {
+                    console.log("Audio play diproteksi browser.");
+                });
+            }
+            isPlaying = !isPlaying;
+        }
+
+        const heartsContainer = document.getElementById('heartsBg');
+        const heartIcons = ['❤️', '💖', '💕', '🌸', '✨'];
+
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 15 + 12) + 'px';
+            heartsContainer.appendChild(heart);
+        }
+    </script>
+</body>
+</html>
