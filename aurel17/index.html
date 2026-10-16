@@ -202,6 +202,12 @@
             color: var(--secondary-color);
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); text-shadow: 0 0 15px rgba(255, 71, 87, 0.3); }
         }
 
         .subtitle {
@@ -220,6 +226,11 @@
             text-align: center;
             margin: 30px 0;
             border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .anniversary-card:hover {
+            transform: translateY(-4deg);
         }
 
         .anniversary-card h2 {
@@ -247,9 +258,28 @@
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             border: 2px dashed var(--light-pink);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
         }
 
-        .envelope-btn {
+        .envelope-wrapper:hover {
+            transform: scale(1.01);
+        }
+
+        .envelope-wrapper:hover .envelope-icon {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            20% { transform: rotate(-8deg); }
+            40% { transform: rotate(8deg); }
+            60% { transform: rotate(-5deg); }
+            80% { transform: rotate(5deg); }
+        }
+
+        .envelope-btn, .interactive-action-btn {
             background: var(--primary-color);
             color: white;
             border: none;
@@ -265,9 +295,9 @@
             margin-top: 15px;
         }
 
-        .envelope-btn:hover {
+        .envelope-btn:hover, .interactive-action-btn:hover {
             background: var(--secondary-color);
-            transform: translateY(-2deg);
+            transform: translateY(-2deg) scale(1.03);
         }
 
         .letter-content {
@@ -277,6 +307,16 @@
             animation: fadeIn 0.8s ease forwards;
             line-height: 1.8;
             color: #444;
+        }
+
+        .interactive-love-box {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: var(--bg-color);
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid var(--light-pink);
         }
 
         @keyframes fadeIn {
@@ -300,6 +340,7 @@
             gap: 25px;
             padding: 10px;
             justify-items: center;
+            perspective: 1000px;
         }
 
         .polaroid-card {
@@ -308,10 +349,11 @@
             border-radius: 8px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
             position: relative;
             width: 100%;
             max-width: 230px;
+            transform-style: preserve-3d;
         }
 
         .polaroid-card:nth-child(odd) {
@@ -325,8 +367,7 @@
         }
 
         .polaroid-card:hover {
-            transform: scale(1.08) rotate(0deg) translateY(-8px);
-            box-shadow: 0 18px 30px rgba(255, 107, 129, 0.25);
+            box-shadow: 0 18px 30px rgba(255, 107, 129, 0.3);
             z-index: 10;
         }
 
@@ -336,6 +377,7 @@
             overflow: hidden;
             border-radius: 4px;
             background: #f0f0f0;
+            position: relative;
         }
 
         .polaroid-card img {
@@ -346,7 +388,7 @@
         }
 
         .polaroid-card:hover img {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .polaroid-badge {
@@ -357,6 +399,11 @@
             font-weight: 600;
             color: var(--primary-color);
             opacity: 0.8;
+            transition: transform 0.3s ease;
+        }
+
+        .polaroid-card:hover .polaroid-badge {
+            transform: scale(1.3);
         }
 
         /* Fullscreen Image Modal (Lightbox) */
@@ -402,6 +449,41 @@
         .close-modal:hover {
             transform: scale(1.2);
             color: var(--primary-color);
+        }
+
+        /* Tap Burst Particle Effect */
+        .click-heart {
+            position: fixed;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 9999;
+            animation: clickFloat 1.2s ease-out forwards;
+        }
+
+        @keyframes clickFloat {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -120px) scale(1.5) rotate(20deg);
+            }
+        }
+
+        /* Sparkle Trail Effect */
+        .sparkle-particle {
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            background: var(--primary-color);
+            z-index: 9998;
+            animation: sparkleFade 0.6s linear forwards;
+        }
+
+        @keyframes sparkleFade {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(0); opacity: 0; }
         }
 
         /* Music Floating Button */
@@ -544,17 +626,17 @@
         <!-- Interactive Letter -->
         <div class="letter-section">
             <div class="envelope-wrapper">
-                <i class="fa-solid fa-envelope-open-text" style="font-size: 3rem; color: var(--primary-color);"></i>
+                <i class="fa-solid fa-envelope-open-text envelope-icon" style="font-size: 3rem; color: var(--primary-color);"></i>
                 <h2 style="margin-top: 10px; font-weight: 600;">Surat Spesial untuk Aurel Dhinta Valencia</h2>
                 <p style="color: #777; font-size: 0.9rem;">Klik tombol di bawah untuk membuka pesan bosyil</p>
-               
+                
                 <button class="envelope-btn" onclick="toggleLetter()">
                     <i class="fa-solid fa-heart"></i> Buka Surat
                 </button>
 
                 <div class="letter-content" id="letterContent">
                     <hr style="border: none; border-top: 1px solid var(--light-pink); margin: 20px 0;">
-                   
+                    
                     <p><strong>Halooo Sayanggg,</strong></p><br>
                     <p>Selamat untuk kita yang sudah menjalankan hubungan sampai ke-5 bulan ini! seperti dipengantar, bosyill sungguh bersyukur dan beruntung bisa dipertemukan dengan kamuu sayangg. dari awal salim di rumahnya mba Vera, masih belum akrab satu sama lain. Ehhh tau-tau deket dan jadian kita WKKWKWKW.</p><br>
                     <p>Terimakasihh sudah menjadi bagian terindah dalam diriku. Terima kasih atas semua kebahagiaan, perhatian, kesabaran, dan kasih sayang yang selalu kamu berikan. Terimakasih juga buat hari-hari yang sudah kita lewatin baik buruknya keadaan. Terimakasih juga udah selalu support satu sama lain sayanggg.</p><br>
@@ -562,6 +644,14 @@
                     <p>Untuk kamuu sayangg, semoga selalu dilancarkan dari segala urusannya yaaa, dilimpahkan rejekinya, dan dikuatkan dalam kondisi apapun. Ingat yaaa sayangg, kamu punya aku disini, jadi kalau ada apa-apa atau kalau lagi butuh sesuatu bilang sama bosyil yaaa. Jangan pernah merasa sendiri yaaa. Semoga dikerjaan dilancarkan semua segala urusannya yaaa, semangattt terus kerjanya sayangg. Tolong kesehatannya sayangg juga dijaga yaaa, sayangg kalau sakit bosyil khawatir e, jangan telat makan yaaa.</p><br>
                     <p>evol u sayanggkuuuu</p><br>
                     <p style="text-align: right;"><strong>Dengan tulus hati,</strong><br> Valentino Fausta H.A</p>
+
+                    <!-- Interactive Love Button inside letter -->
+                    <div class="interactive-love-box" id="loveBox">
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">Kirim seberapa cinta sayangg sama bosyil:</p>
+                        <button class="interactive-action-btn" onclick="sendLove()">
+                            <i class="fa-solid fa-heart-pulse"></i> Kirim Cinta (<span id="loveCount">0</span>)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -720,13 +810,16 @@
 
         function toggleLetter() {
             const content = document.getElementById('letterContent');
+            const loveBox = document.getElementById('loveBox');
             const btn = document.querySelector('.envelope-btn');
            
             if (content.style.display === 'block') {
                 content.style.display = 'none';
+                loveBox.style.display = 'none';
                 btn.innerHTML = '<i class="fa-solid fa-heart"></i> Buka Surat';
             } else {
                 content.style.display = 'block';
+                loveBox.style.display = 'block';
                 btn.innerHTML = '<i class="fa-solid fa-envelope-open"></i> Tutup Surat';
                
                 if (typeof confetti === "function") {
@@ -757,6 +850,7 @@
             isPlaying = !isPlaying;
         }
 
+        // Floating Hearts
         const heartsContainer = document.getElementById('heartsBg');
         const heartIcons = ['❤️', '💖', '💕', '🌸', '✨'];
 
@@ -770,6 +864,69 @@
             heart.style.fontSize = (Math.random() * 15 + 12) + 'px';
             heartsContainer.appendChild(heart);
         }
+
+        /* --- FITUR INTERAKTIF TANPA PESAN KEJUTAN --- */
+
+        // 1. Interactive Tap Effect (Floating Balloon Heart)
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+
+            const clickHeart = document.createElement('div');
+            clickHeart.className = 'click-heart';
+            clickHeart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+            clickHeart.style.left = e.clientX + 'px';
+            clickHeart.style.top = e.clientY + 'px';
+            document.body.appendChild(clickHeart);
+
+            setTimeout(() => {
+                clickHeart.remove();
+            }, 1200);
+        });
+
+        // 2. Interactive Sparkle Trail Effect
+        document.addEventListener('mousemove', function(e) {
+            if (Math.random() > 0.3) return;
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle-particle';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            const size = Math.random() * 6 + 3;
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 600);
+        });
+
+        // 3. Interactive Hug/Love Counter inside letter
+        let count = 0;
+        function sendLove() {
+            count++;
+            document.getElementById('loveCount').innerText = count;
+            if (typeof confetti === "function") {
+                confetti({
+                    particleCount: 35,
+                    spread: 50,
+                    origin: { y: 0.7 }
+                });
+            }
+        }
+
+        // 4. Interactive 3D Polaroid Hover Effect
+        document.querySelectorAll('.polaroid-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                card.style.transform = `perspective(500px) rotateX(${-y / 12}deg) rotateY(${x / 12}deg) scale(1.05)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
     </script>
 </body>
 </html>
