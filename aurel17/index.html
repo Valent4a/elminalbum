@@ -32,6 +32,53 @@
             overflow-x: hidden;
             min-height: 100vh;
         }
+
+        /* Overlay Transisi Banyak Cinta (Full Screen Love Burst) */
+        #heartTransitionOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99999;
+            overflow: hidden;
+        }
+        
+        .transition-heart-item {
+            position: absolute;
+            font-size: 2rem;
+            user-select: none;
+            will-change: transform, opacity;
+        }
+
+        /* Animasi Masuk: Cinta membesar & menutupi layar */
+        @keyframes heartCoverIn {
+            0% {
+                transform: scale(0) translate(0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(var(--target-scale, 3)) translate(0, 0) rotate(var(--target-rot, 0deg));
+                opacity: 1;
+            }
+        }
+
+        /* Animasi Keluar: Terbang menghilang ke pojok-pojok layar */
+        @keyframes heartFlyOut {
+            0% {
+                transform: scale(var(--target-scale, 3)) translate(0, 0) rotate(var(--target-rot, 0deg));
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.2) translate(var(--corner-x, 100vw), var(--corner-y, -100vh)) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
         /* Floating Hearts Background */
         .hearts-bg {
             position: fixed;
@@ -61,6 +108,7 @@
                 opacity: 0;
             }
         }
+
         /* Interactive Welcome Gate Overlay */
         #interactiveGate {
             position: fixed;
@@ -265,6 +313,44 @@
             background: var(--secondary-color);
             transform: translateY(-2deg) scale(1.03);
         }
+
+        /* Desain Disamarkan untuk Tombol Kangen (Tanpa Logo WA) */
+        .secret-kangen-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px dashed var(--primary-color);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 35px 0;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(255, 107, 129, 0.15);
+            transition: transform 0.3s ease;
+        }
+        .secret-kangen-card:hover {
+            transform: translateY(-3deg);
+        }
+        .secret-kangen-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.35);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .secret-kangen-btn:hover {
+            background: #eccc68;
+            color: #2f3542;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(236, 204, 104, 0.45);
+        }
+
         .letter-content {
             display: none;
             padding: 20px 10px 10px;
@@ -273,6 +359,22 @@
             line-height: 1.8;
             color: #444;
         }
+        
+        /* Kursor Berkedip untuk Typing Effect */
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background-color: var(--secondary-color);
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blinkCursor 0.7s infinite;
+        }
+        @keyframes blinkCursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
         .interactive-love-box {
             display: none;
             margin-top: 25px;
@@ -469,8 +571,12 @@
     </style>
 </head>
 <body>
+    <!-- Overlay Transisi Banyak Cinta -->
+    <div id="heartTransitionOverlay"></div>
+
     <!-- Floating Background Hearts -->
     <div class="hearts-bg" id="heartsBg"></div>
+
     <!-- Interaktif Sebelum Masuk Halaman (Welcome Gate) -->
     <div id="interactiveGate">
         <!-- Tahap 1: Masukkan Kode -->
@@ -525,7 +631,7 @@
             <p>Apa sayur favorite Alexa?</p>
             <div class="quiz-options">
                 <button class="quiz-btn" onclick="answerQuiz(4, true)">Brokoli</button>
-                <button class="quiz-btn" onclick="answerQuiz(4, false)">Batu</button>
+                <button class="quiz-btn" onclick="answerQuiz(4, true)">Batu</button>
                 <button class="quiz-btn" onclick="answerQuiz(4, false)">Kayu</button>
             </div>
             <div class="error-msg" id="quiz4Error">Masa salah e?, coba tebak lagi! 🎵</div>
@@ -542,6 +648,7 @@
             </div>
         </div>
     </div>
+
     <!-- Halaman Utama -->
     <div class="container" id="mainContainer">
         <!-- Header -->
@@ -549,11 +656,23 @@
             <h1 class="main-title">Happy 5th Month Elmin!</h1>
             <p class="subtitle">I was enchanted to meet you❤️</p>
         </header>
+
         <!-- Anniversary Message Box -->
         <div class="anniversary-card">
             <h2>Pengantar dari Bosyilmu Tersayang</h2>
             <p> Sebelum baca surat dari aku, terimakasih banyakkk sudah menjalani hubungan denganku selama 5 bulan ini sayangg, aku sangat bersyukur dan beruntung bisa dipertemukan dengan kamu. Untuk selanjutnya di surat yaaa!</p>
         </div>
+
+        <!-- TOMBOL KANGEN (DISAMARKAN TANPA LOGO WA) -->
+        <div class="secret-kangen-card">
+            <i class="fa-solid fa-heart-pulse" style="font-size: 2.8rem; color: var(--primary-color); margin-bottom: 10px;"></i>
+            <h3 style="color: #2f3542; margin-bottom: 8px;">Pesan Rahasia Cinta ❤️</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 12px;">Punya perasaan kangen sama bosyil saat ini?</p>
+            <button class="secret-kangen-btn" onclick="sendWAKangen()">
+                <i class="fa-solid fa-paper-plane"></i> kirim pesan ini kalau kamu kangen sama aku
+            </button>
+        </div>
+
         <!-- Interactive Letter -->
         <div class="letter-section">
             <div class="envelope-wrapper">
@@ -561,19 +680,16 @@
                 <h2 style="margin-top: 10px; font-weight: 600;">Surat Spesial untuk Aurel Dhinta Valencia</h2>
                 <p style="color: #777; font-size: 0.9rem;">Klik tombol di bawah untuk membuka pesan bosyil</p>
                
-                <button class="envelope-btn" onclick="toggleLetter()">
+                <button class="envelope-btn" id="envelopeBtn" onclick="toggleLetter()">
                     <i class="fa-solid fa-heart"></i> Buka Surat
                 </button>
                 <div class="letter-content" id="letterContent">
                     <hr style="border: none; border-top: 1px solid var(--light-pink); margin: 20px 0;">
                    
-                    <p><strong>Halooo Sayanggg,</strong></p><br>
-                    <p>Selamat untuk kita yang sudah menjalankan hubungan sampai ke-5 bulan ini! seperti dipengantar, bosyill sungguh bersyukur dan beruntung bisa dipertemukan dengan kamuu sayangg. dari awal salim di rumahnya mba Vera, masih belum akrab satu sama lain. Ehhh tau-tau deket dan jadian kita WKKWKWKW.</p><br>
-                    <p>Terimakasihh sudah menjadi bagian terindah dalam diriku. Terima kasih atas semua kebahagiaan, perhatian, kesabaran, dan kasih sayang yang selalu kamu berikan. Terimakasih juga buat hari-hari yang sudah kita lewatin baik buruknya keadaan. Terimakasih juga udah selalu support satu sama lain sayanggg.</p><br>
-                    <p>Semoga kita terus saling bersama yaaa sayangg, mungkin disaat diantara kita berdua lagi ada problem, kita tetap hadir dan saling mengerti satu sama lain. Semoga kita bisa lewatin apapun problemnya itu bersama-sama dan tetap saling menjaga komunikasi dengan baik yaaa, tetap support satu sama lain yaaa sayangg, berproses bersama-sama. Maaf jika sejauh ini didalam hubungan kita bosyil ada sikap yang kurang berkenan atau kurang membuat sayangg nyaman. apapun yang kurang baik itu bakal bosyil ubah kedepannya agar tidak menyakiti perasaanmu sayangg. Saling jaga hati dan jaga hubungan ini selalu yaaa sayangg, biar apa yang kita impikan berdua bisa terwujud.</p><br>
-                    <p>Untuk kamuu sayangg, semoga selalu dilancarkan dari segala urusannya yaaa, dilimpahkan rejekinya, dan dikuatkan dalam kondisi apapun. Ingat yaaa sayangg, kamu punya aku disini, jadi kalau ada apa-apa atau kalau lagi butuh sesuatu bilang sama bosyil yaaa. Jangan pernah merasa sendiri yaaa. Semoga dikerjaan dilancarkan semua segala urusannya yaaa, semangattt terus kerjanya sayangg. Tolong kesehatannya sayangg juga dijaga yaaa, sayangg kalau sakit bosyil khawatir e, jangan telat makan yaaa.</p><br>
-                    <p>evol u sayanggkuuuu</p><br>
-                    <p style="text-align: right;"><strong>Dengan tulus hati,</strong><br> Valentino Fausta H.A</p>
+                    <!-- Container Teks Ketik Otomatis -->
+                    <div id="typedLetterContainer"></div>
+                    <span class="typing-cursor" id="typingCursor" style="display: none;"></span>
+
                     <!-- Interactive Love Button inside letter -->
                     <div class="interactive-love-box" id="loveBox">
                         <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">Kirim seberapa cinta sayangg sama bosyil:</p>
@@ -584,6 +700,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Interactive Photo Gallery -->
         <h2 class="section-title">Photo Recap</h2>
         <div class="photo-gallery">
@@ -628,22 +745,23 @@
             Dibuat dengan ❤️ khusus untuk Aurel Dhinta Valencia.
         </footer>
     </div>
+
     <!-- Fullscreen Image Modal -->
     <div class="image-modal" id="imageModal" onclick="closeModal()">
         <span class="close-modal">&times;</span>
         <img class="modal-content" id="modalImg">
     </div>
+
     <!-- Music Player Button -->
     <button class="music-btn" onclick="toggleMusic()" id="musicBtn" title="Putar Musik">
         <i class="fa-solid fa-music"></i>
     </button>
     <audio id="bgMusic" loop src="enchanted.mp3"></audio>
+
     <script>
-        // Inisialisasi Audio Context untuk membuat suara di Browser (tanpa file mp3 eksternal)
+        // Inisialisasi Audio Context
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
-
-
         function playSound(type) {
             if (!audioCtx) {
                 audioCtx = new AudioContext();
@@ -659,7 +777,6 @@
             gainNode.connect(audioCtx.destination);
            
             if (type === 'click') {
-                // Suara klik ringan
                 oscillator.type = 'sine';
                 oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
                 oscillator.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
@@ -668,16 +785,14 @@
                 oscillator.start(audioCtx.currentTime);
                 oscillator.stop(audioCtx.currentTime + 0.1);
             } else if (type === 'correct') {
-                // Suara denting gembira
                 oscillator.type = 'triangle';
-                oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); // Nada C5
-                oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // Nada E5
+                oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
                 gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
                 gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);
                 oscillator.start(audioCtx.currentTime);
                 oscillator.stop(audioCtx.currentTime + 0.3);
             } else if (type === 'wrong') {
-                // Suara boop kesalahan
                 oscillator.type = 'sawtooth';
                 oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
                 oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
@@ -688,6 +803,84 @@
             }
         }
 
+        // FUNGSI KHUSUS KIRIM PESAN KANGEN VIA WA
+        function sendWAKangen() {
+            playSound('correct');
+            const phoneNumber = "628818637688";
+            const message = "aku kangen bangetttt";
+            const encodedMessage = encodeURIComponent(message);
+            const waUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            if (typeof confetti === "function") {
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.7 }
+                });
+            }
+
+            // Langsung membuka WhatsApp dengan pesan yang sudah terisi otomatis
+            setTimeout(() => {
+                window.location.href = waUrl;
+            }, 300);
+        }
+
+        // --- SISTEM TRANSISI BANYAK EMOJI CINTA ---
+        function triggerLoveBurstTransition(callback) {
+            const overlay = document.getElementById('heartTransitionOverlay');
+            overlay.innerHTML = '';
+            
+            const heartEmojis = ['❤️', '💖', '💕', '💗', '💓', '💞', '🌸', '✨'];
+            const corners = [
+                { x: '-120vw', y: '-120vh' },
+                { x: '120vw', y: '-120vh' },
+                { x: '-120vw', y: '120vh' },
+                { x: '120vw', y: '120vh' }
+            ];
+            
+            const items = [];
+            const totalHearts = 60;
+
+            for (let i = 0; i < totalHearts; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'transition-heart-item';
+                heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                
+                const xPos = Math.random() * 100;
+                const yPos = Math.random() * 100;
+                const randomScale = (Math.random() * 2.5 + 2).toFixed(1);
+                const randomRot = Math.floor(Math.random() * 360 - 180) + 'deg';
+                
+                const targetCorner = corners[Math.floor(Math.random() * corners.length)];
+                
+                heart.style.left = xPos + 'vw';
+                heart.style.top = yPos + 'vh';
+                heart.style.setProperty('--target-scale', randomScale);
+                heart.style.setProperty('--target-rot', randomRot);
+                heart.style.setProperty('--corner-x', targetCorner.x);
+                heart.style.setProperty('--corner-y', targetCorner.y);
+
+                const delay = (Math.random() * 0.3).toFixed(2);
+                heart.style.animation = `heartCoverIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) ${delay}s forwards`;
+                
+                overlay.appendChild(heart);
+                items.push(heart);
+            }
+
+            setTimeout(() => {
+                if (typeof callback === 'function') callback();
+
+                items.forEach(heart => {
+                    const flyDelay = (Math.random() * 0.2).toFixed(2);
+                    heart.style.animation = `heartFlyOut 0.8s ease-in ${flyDelay}s forwards`;
+                });
+
+                setTimeout(() => {
+                    overlay.innerHTML = '';
+                }, 1200);
+
+            }, 800);
+        }
 
         const CORRECT_PIN = "2305";
         function checkPasscode() {
@@ -697,14 +890,18 @@
             if (input === CORRECT_PIN) {
                 playSound('correct');
                 errorMsg.style.display = 'none';
-                document.getElementById('stepPasscode').style.display = 'none';
-                document.getElementById('stepQuiz1').style.display = 'block';
-                if (typeof confetti === "function") confetti({ particleCount: 20, spread: 50 });
+
+                triggerLoveBurstTransition(() => {
+                    document.getElementById('stepPasscode').style.display = 'none';
+                    document.getElementById('stepQuiz1').style.display = 'block';
+                    if (typeof confetti === "function") confetti({ particleCount: 30, spread: 60 });
+                });
             } else {
                 playSound('wrong');
                 errorMsg.style.display = 'block';
             }
         }
+
         function answerQuiz(quizNum, isCorrect) {
             const currentErr = document.getElementById(`quiz${quizNum}Error`);
            
@@ -717,24 +914,26 @@
                     document.getElementById(`stepQuiz${quizNum + 1}`).style.display = 'block';
                     if (typeof confetti === "function") confetti({ particleCount: 30, spread: 60 });
                 } else {
-                    // Selesai Kuis, sembunyikan gerbang overlay
-                    const gate = document.getElementById('interactiveGate');
-                    gate.style.display = 'none';
-                   
-                    if (typeof confetti === "function") {
-                        confetti({
-                            particleCount: 120,
-                            spread: 80,
-                            origin: { y: 0.5 }
-                        });
-                    }
-                    toggleMusic();
+                    triggerLoveBurstTransition(() => {
+                        const gate = document.getElementById('interactiveGate');
+                        gate.style.display = 'none';
+                       
+                        if (typeof confetti === "function") {
+                            confetti({
+                                particleCount: 120,
+                                spread: 80,
+                                origin: { y: 0.5 }
+                            });
+                        }
+                        toggleMusic();
+                    });
                 }
             } else {
                 playSound('wrong');
                 if (currentErr) currentErr.style.display = 'block';
             }
         }
+
         let dodgeCount = 0;
         function moveButton() {
             playSound('click');
@@ -752,6 +951,7 @@
                 }, 300);
             }
         }
+
         function openModal(element) {
             playSound('click');
             const modal = document.getElementById('imageModal');
@@ -768,34 +968,117 @@
                 });
             }
         }
+
         function closeModal() {
             playSound('click');
             document.getElementById('imageModal').style.display = "none";
         }
+
+        // --- SISTEM TYPING ANIMATION SURAT ---
+        const letterParagraphs = [
+            "<p><strong>Halooo Sayanggg,</strong></p><br>",
+            "<p>Selamat untuk kita yang sudah menjalankan hubungan sampai ke-5 bulan ini! seperti dipengantar, bosyill sungguh bersyukur dan beruntung bisa dipertemukan dengan kamuu sayangg. dari awal salim di rumahnya mba Vera, masih belum akrab satu sama lain. Ehhh tau-tau deket dan jadian kita WKKWKWKW.</p><br>",
+            "<p>Terimakasihh sudah menjadi bagian terindah dalam diriku. Terima kasih atas semua kebahagiaan, perhatian, kesabaran, dan kasih sayang yang selalu kamu berikan. Terimakasih juga buat hari-hari yang sudah kita lewatin baik buruknya keadaan. Terimakasih juga udah selalu support satu sama lain sayanggg.</p><br>",
+            "<p>Semoga kita terus saling bersama yaaa sayangg, mungkin disaat diantara kita berdua lagi ada problem, kita tetap hadir dan saling mengerti satu sama lain. Semoga kita bisa lewatin apapun problemnya itu bersama-sama dan tetap saling menjaga komunikasi dengan baik yaaa, tetap support satu sama lain yaaa sayangg, berproses bersama-sama. Maaf jika sejauh ini didalam hubungan kita bosyil ada sikap yang kurang berkenan atau kurang membuat sayangg nyaman. apapun yang kurang baik itu bakal bosyil ubah kedepannya agar tidak menyakiti perasaanmu sayangg. Saling jaga hati dan jaga hubungan ini selalu yaaa sayangg, biar apa yang kita impikan berdua bisa terwujud.</p><br>",
+            "<p>Untuk kamuu sayangg, semoga selalu dilancarkan dari segala urusannya yaaa, dilimpahkan rejekinya, dan dikuatkan dalam kondisi apapun. Ingat yaaa sayangg, kamu punya aku disini, jadi kalau ada apa-apa atau kalau lagi butuh sesuatu bilang sama bosyil yaaa. Jangan pernah merasa sendiri yaaa. Semoga dikerjaan dilancarkan semua segala urusannya yaaa, semangattt terus kerjanya sayangg. Tolong kesehatannya sayangg juga dijaga yaaa, sayangg kalau sakit bosyil khawatir e, jangan telat makan yaaa.</p><br>",
+            "<p>evol u sayanggkuuuu</p><br>",
+            "<p style='text-align: right;'><strong>Dengan tulus hati,</strong><br> Valentino Fausta H.A</p>"
+        ];
+
+        let isTypingActive = false;
+        let typingTimeoutId = null;
+
+        function startLetterTyping() {
+            const container = document.getElementById('typedLetterContainer');
+            const cursor = document.getElementById('typingCursor');
+            const loveBox = document.getElementById('loveBox');
+            const btn = document.getElementById('envelopeBtn');
+            
+            container.innerHTML = '';
+            loveBox.style.display = 'none';
+            cursor.style.display = 'inline-block';
+            isTypingActive = true;
+            btn.disabled = true;
+
+            let pIndex = 0;
+            
+            function parseHTMLAndType(htmlString, callback) {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlString;
+                
+                const pElem = document.createElement('p');
+                if (tempDiv.firstChild && tempDiv.firstChild.style) {
+                    pElem.style.cssText = tempDiv.firstChild.style.cssText;
+                }
+                container.appendChild(pElem);
+
+                const fullText = tempDiv.textContent || tempDiv.innerText || "";
+                let charIdx = 0;
+
+                function typeChar() {
+                    if (!isTypingActive) return;
+                    if (charIdx < fullText.length) {
+                        pElem.textContent += fullText.charAt(charIdx);
+                        charIdx++;
+                        typingTimeoutId = setTimeout(typeChar, 25);
+                    } else {
+                        pElem.innerHTML = tempDiv.firstChild ? tempDiv.firstChild.innerHTML : fullText;
+                        if (callback) callback();
+                    }
+                }
+                typeChar();
+            }
+
+            function typeNextParagraph() {
+                if (!isTypingActive) return;
+                if (pIndex < letterParagraphs.length) {
+                    parseHTMLAndType(letterParagraphs[pIndex], () => {
+                        pIndex++;
+                        typingTimeoutId = setTimeout(typeNextParagraph, 200);
+                    });
+                } else {
+                    cursor.style.display = 'none';
+                    loveBox.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-envelope-open"></i> Tutup Surat';
+                    
+                    if (typeof confetti === "function") {
+                        confetti({
+                            particleCount: 80,
+                            spread: 60,
+                            origin: { y: 0.6 }
+                        });
+                    }
+                }
+            }
+
+            typeNextParagraph();
+        }
+
+        function stopLetterTyping() {
+            isTypingActive = false;
+            if (typingTimeoutId) clearTimeout(typingTimeoutId);
+            document.getElementById('typingCursor').style.display = 'none';
+            document.getElementById('typedLetterContainer').innerHTML = '';
+        }
+
         function toggleLetter() {
             playSound('click');
             const content = document.getElementById('letterContent');
             const loveBox = document.getElementById('loveBox');
-            const btn = document.querySelector('.envelope-btn');
+            const btn = document.getElementById('envelopeBtn');
            
             if (content.style.display === 'block') {
+                stopLetterTyping();
                 content.style.display = 'none';
                 loveBox.style.display = 'none';
                 btn.innerHTML = '<i class="fa-solid fa-heart"></i> Buka Surat';
             } else {
                 content.style.display = 'block';
-                loveBox.style.display = 'block';
-                btn.innerHTML = '<i class="fa-solid fa-envelope-open"></i> Tutup Surat';
-               
-                if (typeof confetti === "function") {
-                    confetti({
-                        particleCount: 80,
-                        spread: 60,
-                        origin: { y: 0.6 }
-                    });
-                }
+                startLetterTyping();
             }
         }
+
         const music = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         let isPlaying = false;
@@ -813,7 +1096,8 @@
             }
             isPlaying = !isPlaying;
         }
-        // Floating Hearts
+
+        // Floating Hearts Background
         const heartsContainer = document.getElementById('heartsBg');
         const heartIcons = ['❤️', '💖', '💕', '🌸', '✨'];
         for (let i = 0; i < 20; i++) {
@@ -826,8 +1110,9 @@
             heart.style.fontSize = (Math.random() * 15 + 12) + 'px';
             heartsContainer.appendChild(heart);
         }
-        /* --- FITUR INTERAKTIF TANPA PESAN KEJUTAN --- */
-        // 1. Interactive Tap Effect (Floating Balloon Heart)
+
+        /* --- FITUR INTERAKTIF --- */
+        // 1. Interactive Tap Effect
         document.addEventListener('click', function(e) {
             if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
             const clickHeart = document.createElement('div');
@@ -840,6 +1125,7 @@
                 clickHeart.remove();
             }, 1200);
         });
+
         // 2. Interactive Sparkle Trail Effect
         document.addEventListener('mousemove', function(e) {
             if (Math.random() > 0.3) return;
@@ -855,7 +1141,8 @@
                 sparkle.remove();
             }, 600);
         });
-        // 3. Interactive Hug/Love Counter inside letter
+
+        // 3. Interactive Love Counter
         let count = 0;
         function sendLove() {
             playSound('correct');
@@ -869,6 +1156,7 @@
                 });
             }
         }
+
         // 4. Interactive 3D Polaroid Hover Effect
         document.querySelectorAll('.polaroid-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
