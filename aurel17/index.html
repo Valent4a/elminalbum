@@ -268,7 +268,7 @@
         }
         /* Envelope Section */
         .letter-section {
-            margin: 50px 0;
+            margin: 50px 0 30px;
             text-align: center;
         }
         .envelope-wrapper {
@@ -320,7 +320,7 @@
             border: 2px dashed var(--primary-color);
             border-radius: 20px;
             padding: 25px;
-            margin: 35px 0;
+            margin: 35px 0 50px;
             text-align: center;
             box-shadow: 0 10px 25px rgba(255, 107, 129, 0.15);
             transition: transform 0.3s ease;
@@ -663,16 +663,6 @@
             <p> Sebelum baca surat dari aku, terimakasih banyakkk sudah menjalani hubungan denganku selama 5 bulan ini sayangg, aku sangat bersyukur dan beruntung bisa dipertemukan dengan kamu. Untuk selanjutnya di surat yaaa!</p>
         </div>
 
-        <!-- TOMBOL KANGEN (DISAMARKAN TANPA LOGO WA) -->
-        <div class="secret-kangen-card">
-            <i class="fa-solid fa-heart-pulse" style="font-size: 2.8rem; color: var(--primary-color); margin-bottom: 10px;"></i>
-            <h3 style="color: #2f3542; margin-bottom: 8px;">Pesan Rahasia Cinta ❤️</h3>
-            <p style="font-size: 0.9rem; color: #666; margin-bottom: 12px;">Punya perasaan kangen sama bosyil saat ini?</p>
-            <button class="secret-kangen-btn" onclick="sendWAKangen()">
-                <i class="fa-solid fa-paper-plane"></i> kirim pesan ini kalau kamu kangen sama aku
-            </button>
-        </div>
-
         <!-- Interactive Letter -->
         <div class="letter-section">
             <div class="envelope-wrapper">
@@ -699,6 +689,16 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- TOMBOL KANGEN (DITARUH SEBELUM FOTO / PHOTO RECAP) -->
+        <div class="secret-kangen-card">
+            <i class="fa-solid fa-heart-pulse" style="font-size: 2.8rem; color: var(--primary-color); margin-bottom: 10px;"></i>
+            <h3 style="color: #2f3542; margin-bottom: 8px;">Pesan Rahasia Cinta ❤️</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 12px;">Punya perasaan kangen sama bosyil saat ini?</p>
+            <button class="secret-kangen-btn" onclick="sendWAKangen()">
+                <i class="fa-solid fa-paper-plane"></i> kirim pesan ini kalau kamu kangen sama bosyilmu
+            </button>
         </div>
 
         <!-- Interactive Photo Gallery -->
