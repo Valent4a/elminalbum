@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
+   
     <style>
         :root {
             --primary-color: #ff6b81;
@@ -20,13 +20,11 @@
             --text-color: #2f3542;
             --light-pink: #ffe0e6;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #fff5f6 0%, #ffe0e6 100%);
@@ -34,7 +32,6 @@
             overflow-x: hidden;
             min-height: 100vh;
         }
-
         /* Floating Hearts Background */
         .hearts-bg {
             position: fixed;
@@ -46,13 +43,11 @@
             z-index: 0;
             overflow: hidden;
         }
-
         .heart-particle {
             position: absolute;
             color: rgba(255, 107, 129, 0.3);
             animation: floatUp 8s linear infinite;
         }
-
         @keyframes floatUp {
             0% {
                 transform: translateY(100vh) scale(0.5) rotate(0deg);
@@ -66,7 +61,6 @@
                 opacity: 0;
             }
         }
-
         /* Interactive Welcome Gate Overlay */
         #interactiveGate {
             position: fixed;
@@ -83,7 +77,6 @@
             padding: 20px;
             transition: opacity 0.5s ease;
         }
-
         .gate-card {
             background: #ffffff;
             padding: 35px 25px;
@@ -95,20 +88,17 @@
             border: 2px solid var(--light-pink);
             animation: fadeIn 0.5s ease;
         }
-
         .gate-card h2 {
             font-family: 'Dancing Script', cursive;
             font-size: 2.5rem;
             color: var(--secondary-color);
             margin-bottom: 10px;
         }
-
         .gate-card p {
             font-size: 0.95rem;
             color: #666;
             margin-bottom: 20px;
         }
-
         .pin-input {
             width: 100%;
             padding: 12px;
@@ -121,11 +111,9 @@
             margin-bottom: 15px;
             transition: border-color 0.3s;
         }
-
         .pin-input:focus {
             border-color: var(--primary-color);
         }
-
         .gate-btn {
             background: var(--primary-color);
             color: white;
@@ -139,19 +127,16 @@
             font-weight: 600;
             width: 100%;
         }
-
         .gate-btn:hover {
             background: var(--secondary-color);
             transform: translateY(-2deg);
         }
-
         .quiz-options {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-bottom: 15px;
         }
-
         .quiz-btn {
             background: var(--bg-color);
             border: 1.5px solid var(--light-pink);
@@ -162,26 +147,22 @@
             color: var(--text-color);
             font-size: 0.95rem;
         }
-
         .quiz-btn:hover {
             background: var(--light-pink);
             color: var(--secondary-color);
             font-weight: 600;
         }
-
         .trick-btn {
             transition: all 0.2s ease;
             position: relative;
             z-index: 10;
         }
-
         .error-msg {
             color: var(--secondary-color);
             font-size: 0.85rem;
             margin-top: 10px;
             display: none;
         }
-
         /* Container & Layout */
         .container {
             max-width: 800px;
@@ -190,12 +171,10 @@
             position: relative;
             z-index: 1;
         }
-
         header {
             text-align: center;
             padding: 50px 0 30px;
         }
-
         .main-title {
             font-family: 'Dancing Script', cursive;
             font-size: 3.8rem;
@@ -204,18 +183,15 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
             animation: pulseGlow 3s infinite ease-in-out;
         }
-
         @keyframes pulseGlow {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.02); text-shadow: 0 0 15px rgba(255, 71, 87, 0.3); }
         }
-
         .subtitle {
             font-size: 1.15rem;
             color: #666;
             font-weight: 300;
         }
-
         /* Simple Card Highlight */
         .anniversary-card {
             background: rgba(255, 255, 255, 0.85);
@@ -228,30 +204,25 @@
             border: 1px solid rgba(255, 255, 255, 0.5);
             transition: transform 0.3s ease;
         }
-
         .anniversary-card:hover {
             transform: translateY(-4deg);
         }
-
         .anniversary-card h2 {
             font-family: 'Dancing Script', cursive;
             font-size: 2.2rem;
             color: var(--secondary-color);
             margin-bottom: 10px;
         }
-
         .anniversary-card p {
             font-size: 1rem;
             color: #555;
             line-height: 1.6;
         }
-
         /* Envelope Section */
         .letter-section {
             margin: 50px 0;
             text-align: center;
         }
-
         .envelope-wrapper {
             background: var(--card-bg);
             border-radius: 20px;
@@ -262,15 +233,12 @@
             overflow: hidden;
             transition: transform 0.3s ease;
         }
-
         .envelope-wrapper:hover {
             transform: scale(1.01);
         }
-
         .envelope-wrapper:hover .envelope-icon {
             animation: shake 0.5s ease-in-out;
         }
-
         @keyframes shake {
             0%, 100% { transform: rotate(0deg); }
             20% { transform: rotate(-8deg); }
@@ -278,7 +246,6 @@
             60% { transform: rotate(-5deg); }
             80% { transform: rotate(5deg); }
         }
-
         .envelope-btn, .interactive-action-btn {
             background: var(--primary-color);
             color: white;
@@ -294,12 +261,10 @@
             gap: 8px;
             margin-top: 15px;
         }
-
         .envelope-btn:hover, .interactive-action-btn:hover {
             background: var(--secondary-color);
             transform: translateY(-2deg) scale(1.03);
         }
-
         .letter-content {
             display: none;
             padding: 20px 10px 10px;
@@ -308,7 +273,6 @@
             line-height: 1.8;
             color: #444;
         }
-
         .interactive-love-box {
             display: none;
             margin-top: 25px;
@@ -318,12 +282,10 @@
             text-align: center;
             border: 1px solid var(--light-pink);
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10deg); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         /* Section Title */
         .section-title {
             text-align: center;
@@ -332,7 +294,6 @@
             color: var(--secondary-color);
             margin: 50px 0 30px;
         }
-
         /* Interactive Photo Gallery (Polaroid Grid) */
         .photo-gallery {
             display: grid;
@@ -342,7 +303,6 @@
             justify-items: center;
             perspective: 1000px;
         }
-
         .polaroid-card {
             background: #ffffff;
             padding: 12px 12px 25px 12px;
@@ -355,7 +315,6 @@
             max-width: 230px;
             transform-style: preserve-3d;
         }
-
         .polaroid-card:nth-child(odd) {
             transform: rotate(-3deg);
         }
@@ -365,12 +324,10 @@
         .polaroid-card:nth-child(3n) {
             transform: rotate(-1.5deg);
         }
-
         .polaroid-card:hover {
             box-shadow: 0 18px 30px rgba(255, 107, 129, 0.3);
             z-index: 10;
         }
-
         .polaroid-img-wrapper {
             width: 100%;
             height: 200px;
@@ -379,18 +336,15 @@
             background: #f0f0f0;
             position: relative;
         }
-
         .polaroid-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
-
         .polaroid-card:hover img {
             transform: scale(1.08);
         }
-
         .polaroid-badge {
             position: absolute;
             bottom: 6px;
@@ -401,11 +355,9 @@
             opacity: 0.8;
             transition: transform 0.3s ease;
         }
-
         .polaroid-card:hover .polaroid-badge {
             transform: scale(1.3);
         }
-
         /* Fullscreen Image Modal (Lightbox) */
         .image-modal {
             display: none;
@@ -422,7 +374,6 @@
             padding: 20px;
             animation: fadeIn 0.3s ease;
         }
-
         .modal-content {
             max-width: 90%;
             max-height: 85vh;
@@ -430,12 +381,10 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
         @keyframes zoomIn {
             from { transform: scale(0.7); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
-
         .close-modal {
             position: absolute;
             top: 25px;
@@ -445,12 +394,10 @@
             cursor: pointer;
             transition: transform 0.2s;
         }
-
         .close-modal:hover {
             transform: scale(1.2);
             color: var(--primary-color);
         }
-
         /* Tap Burst Particle Effect */
         .click-heart {
             position: fixed;
@@ -459,7 +406,6 @@
             z-index: 9999;
             animation: clickFloat 1.2s ease-out forwards;
         }
-
         @keyframes clickFloat {
             0% {
                 opacity: 1;
@@ -470,7 +416,6 @@
                 transform: translate(-50%, -120px) scale(1.5) rotate(20deg);
             }
         }
-
         /* Sparkle Trail Effect */
         .sparkle-particle {
             position: fixed;
@@ -480,12 +425,10 @@
             z-index: 9998;
             animation: sparkleFade 0.6s linear forwards;
         }
-
         @keyframes sparkleFade {
             0% { transform: scale(1); opacity: 0.8; }
             100% { transform: scale(0); opacity: 0; }
         }
-
         /* Music Floating Button */
         .music-btn {
             position: fixed;
@@ -505,11 +448,9 @@
             border: none;
             transition: all 0.3s ease;
         }
-
         .music-btn:hover {
             transform: scale(1.1);
         }
-
         @media screen and (max-width: 600px) {
             .main-title {
                 font-size: 2.8rem;
@@ -528,10 +469,8 @@
     </style>
 </head>
 <body>
-
     <!-- Floating Background Hearts -->
     <div class="hearts-bg" id="heartsBg"></div>
-
     <!-- Interaktif Sebelum Masuk Halaman (Welcome Gate) -->
     <div id="interactiveGate">
         <!-- Tahap 1: Masukkan Kode -->
@@ -543,7 +482,6 @@
             <button class="gate-btn" onclick="checkPasscode()">Buka Kunci ❤️</button>
             <div class="error-msg" id="pinError">Kode salah sayanggkuu! Coba lagi yashhh, clue nya rokaville</div>
         </div>
-
         <!-- Tahap 2: Kuis Pertanyaan 1 -->
         <div class="gate-card" id="stepQuiz1" style="display: none;">
             <i class="fa-solid fa-heart-circle-check" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
@@ -556,7 +494,6 @@
             </div>
             <div class="error-msg" id="quiz1Error">Tetot! Jawaban salah, coba ingat lagi pas awal ketemu!</div>
         </div>
-
         <!-- Tahap 3: Kuis Pertanyaan 2 -->
         <div class="gate-card" id="stepQuiz2" style="display: none;">
             <i class="fa-solid fa-calendar-heart" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
@@ -569,7 +506,6 @@
             </div>
             <div class="error-msg" id="quiz2Error">Wooo masa salah? Coba lagi sayangg</div>
         </div>
-
         <!-- Tahap 4: Kuis Pertanyaan 3 -->
         <div class="gate-card" id="stepQuiz3" style="display: none;">
             <i class="fa-solid fa-crown" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
@@ -582,7 +518,6 @@
             </div>
             <div class="error-msg" id="quiz3Error">Tetot! Salah panggil hmmzzz!</div>
         </div>
-
         <!-- Tahap 5: Kuis Pertanyaan 4 -->
         <div class="gate-card" id="stepQuiz4" style="display: none;">
             <i class="fa-solid fa-music" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
@@ -595,7 +530,6 @@
             </div>
             <div class="error-msg" id="quiz4Error">Masa salah e?, coba tebak lagi! 🎵</div>
         </div>
-
         <!-- Tahap 6: Kuis Pertanyaan 5 -->
         <div class="gate-card" id="stepQuiz5" style="display: none;">
             <i class="fa-solid fa-face-smile-beam" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
@@ -608,7 +542,6 @@
             </div>
         </div>
     </div>
-
     <!-- Halaman Utama -->
     <div class="container" id="mainContainer">
         <!-- Header -->
@@ -616,27 +549,24 @@
             <h1 class="main-title">Happy 5th Month Elmin!</h1>
             <p class="subtitle">I was enchanted to meet you❤️</p>
         </header>
-
         <!-- Anniversary Message Box -->
         <div class="anniversary-card">
             <h2>Pengantar dari Bosyilmu Tersayang</h2>
             <p> Sebelum baca surat dari aku, terimakasih banyakkk sudah menjalani hubungan denganku selama 5 bulan ini sayangg, aku sangat bersyukur dan beruntung bisa dipertemukan dengan kamu. Untuk selanjutnya di surat yaaa!</p>
         </div>
-
         <!-- Interactive Letter -->
         <div class="letter-section">
             <div class="envelope-wrapper">
                 <i class="fa-solid fa-envelope-open-text envelope-icon" style="font-size: 3rem; color: var(--primary-color);"></i>
                 <h2 style="margin-top: 10px; font-weight: 600;">Surat Spesial untuk Aurel Dhinta Valencia</h2>
                 <p style="color: #777; font-size: 0.9rem;">Klik tombol di bawah untuk membuka pesan bosyil</p>
-                
+               
                 <button class="envelope-btn" onclick="toggleLetter()">
                     <i class="fa-solid fa-heart"></i> Buka Surat
                 </button>
-
                 <div class="letter-content" id="letterContent">
                     <hr style="border: none; border-top: 1px solid var(--light-pink); margin: 20px 0;">
-                    
+                   
                     <p><strong>Halooo Sayanggg,</strong></p><br>
                     <p>Selamat untuk kita yang sudah menjalankan hubungan sampai ke-5 bulan ini! seperti dipengantar, bosyill sungguh bersyukur dan beruntung bisa dipertemukan dengan kamuu sayangg. dari awal salim di rumahnya mba Vera, masih belum akrab satu sama lain. Ehhh tau-tau deket dan jadian kita WKKWKWKW.</p><br>
                     <p>Terimakasihh sudah menjadi bagian terindah dalam diriku. Terima kasih atas semua kebahagiaan, perhatian, kesabaran, dan kasih sayang yang selalu kamu berikan. Terimakasih juga buat hari-hari yang sudah kita lewatin baik buruknya keadaan. Terimakasih juga udah selalu support satu sama lain sayanggg.</p><br>
@@ -644,7 +574,6 @@
                     <p>Untuk kamuu sayangg, semoga selalu dilancarkan dari segala urusannya yaaa, dilimpahkan rejekinya, dan dikuatkan dalam kondisi apapun. Ingat yaaa sayangg, kamu punya aku disini, jadi kalau ada apa-apa atau kalau lagi butuh sesuatu bilang sama bosyil yaaa. Jangan pernah merasa sendiri yaaa. Semoga dikerjaan dilancarkan semua segala urusannya yaaa, semangattt terus kerjanya sayangg. Tolong kesehatannya sayangg juga dijaga yaaa, sayangg kalau sakit bosyil khawatir e, jangan telat makan yaaa.</p><br>
                     <p>evol u sayanggkuuuu</p><br>
                     <p style="text-align: right;"><strong>Dengan tulus hati,</strong><br> Valentino Fausta H.A</p>
-
                     <!-- Interactive Love Button inside letter -->
                     <div class="interactive-love-box" id="loveBox">
                         <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">Kirim seberapa cinta sayangg sama bosyil:</p>
@@ -655,7 +584,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Interactive Photo Gallery -->
         <h2 class="section-title">Photo Recap</h2>
         <div class="photo-gallery">
@@ -665,35 +593,30 @@
                 </div>
                 <span class="polaroid-badge">💕 1</span>
             </div>
-
             <div class="polaroid-card" onclick="openModal(this)">
                 <div class="polaroid-img-wrapper">
                     <img src="elmin2.png" alt="Momen 2">
                 </div>
                 <span class="polaroid-badge">💕 2</span>
             </div>
-
             <div class="polaroid-card" onclick="openModal(this)">
                 <div class="polaroid-img-wrapper">
                     <img src="elmin3.jpg" alt="Momen 3">
                 </div>
                 <span class="polaroid-badge">💕 3</span>
             </div>
-
             <div class="polaroid-card" onclick="openModal(this)">
                 <div class="polaroid-img-wrapper">
                     <img src="elmin4.jpg" alt="Momen 4">
                 </div>
                 <span class="polaroid-badge">💕 4</span>
             </div>
-
             <div class="polaroid-card" onclick="openModal(this)">
                 <div class="polaroid-img-wrapper">
                     <img src="elmin5.jpg" alt="Momen 5">
                 </div>
                 <span class="polaroid-badge">💕 5</span>
             </div>
-
             <div class="polaroid-card" onclick="openModal(this)">
                 <div class="polaroid-img-wrapper">
                     <img src="elmin6.jpg" alt="Momen 6">
@@ -701,49 +624,95 @@
                 <span class="polaroid-badge">💕 6</span>
             </div>
         </div>
-
         <footer style="text-align: center; padding: 40px 0 20px; color: #888; font-size: 0.85rem;">
             Dibuat dengan ❤️ khusus untuk Aurel Dhinta Valencia.
         </footer>
     </div>
-
     <!-- Fullscreen Image Modal -->
     <div class="image-modal" id="imageModal" onclick="closeModal()">
         <span class="close-modal">&times;</span>
         <img class="modal-content" id="modalImg">
     </div>
-
     <!-- Music Player Button -->
     <button class="music-btn" onclick="toggleMusic()" id="musicBtn" title="Putar Musik">
         <i class="fa-solid fa-music"></i>
     </button>
-
     <audio id="bgMusic" loop src="enchanted.mp3"></audio>
-
     <script>
-        const CORRECT_PIN = "2305";
+        // Inisialisasi Audio Context untuk membuat suara di Browser (tanpa file mp3 eksternal)
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
 
+
+        function playSound(type) {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+           
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+           
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+           
+            if (type === 'click') {
+                // Suara klik ringan
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'correct') {
+                // Suara denting gembira
+                oscillator.type = 'triangle';
+                oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); // Nada C5
+                oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // Nada E5
+                gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'wrong') {
+                // Suara boop kesalahan
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+                gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.2);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.2);
+            }
+        }
+
+
+        const CORRECT_PIN = "2305";
         function checkPasscode() {
             const input = document.getElementById('passcodeInput').value;
             const errorMsg = document.getElementById('pinError');
-            
+           
             if (input === CORRECT_PIN) {
+                playSound('correct');
                 errorMsg.style.display = 'none';
                 document.getElementById('stepPasscode').style.display = 'none';
                 document.getElementById('stepQuiz1').style.display = 'block';
                 if (typeof confetti === "function") confetti({ particleCount: 20, spread: 50 });
             } else {
+                playSound('wrong');
                 errorMsg.style.display = 'block';
             }
         }
-
         function answerQuiz(quizNum, isCorrect) {
             const currentErr = document.getElementById(`quiz${quizNum}Error`);
-            
+           
             if (isCorrect) {
+                playSound('correct');
                 if (currentErr) currentErr.style.display = 'none';
                 document.getElementById(`stepQuiz${quizNum}`).style.display = 'none';
-                
+               
                 if (quizNum < 5) {
                     document.getElementById(`stepQuiz${quizNum + 1}`).style.display = 'block';
                     if (typeof confetti === "function") confetti({ particleCount: 30, spread: 60 });
@@ -751,7 +720,7 @@
                     // Selesai Kuis, sembunyikan gerbang overlay
                     const gate = document.getElementById('interactiveGate');
                     gate.style.display = 'none';
-                    
+                   
                     if (typeof confetti === "function") {
                         confetti({
                             particleCount: 120,
@@ -759,24 +728,21 @@
                             origin: { y: 0.5 }
                         });
                     }
-
                     toggleMusic();
                 }
             } else {
+                playSound('wrong');
                 if (currentErr) currentErr.style.display = 'block';
             }
         }
-
         let dodgeCount = 0;
-
         function moveButton() {
+            playSound('click');
             const btn = document.getElementById('runawayBtn');
             dodgeCount++;
-
             if (dodgeCount <= 2) {
-                const randomX = (Math.random() - 0.5) * 160; 
+                const randomX = (Math.random() - 0.5) * 160;
                 const randomY = (Math.random() - 0.5) * 80;  
-
                 btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
             } else {
                 btn.style.opacity = '0';
@@ -786,15 +752,14 @@
                 }, 300);
             }
         }
-
         function openModal(element) {
+            playSound('click');
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImg');
             const imgSource = element.querySelector('img').src;
-            
+           
             modal.style.display = "flex";
             modalImg.src = imgSource;
-
             if (typeof confetti === "function") {
                 confetti({
                     particleCount: 30,
@@ -803,12 +768,12 @@
                 });
             }
         }
-
         function closeModal() {
+            playSound('click');
             document.getElementById('imageModal').style.display = "none";
         }
-
         function toggleLetter() {
+            playSound('click');
             const content = document.getElementById('letterContent');
             const loveBox = document.getElementById('loveBox');
             const btn = document.querySelector('.envelope-btn');
@@ -831,12 +796,11 @@
                 }
             }
         }
-
         const music = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         let isPlaying = false;
-
         function toggleMusic() {
+            playSound('click');
             if (isPlaying) {
                 music.pause();
                 musicBtn.innerHTML = '<i class="fa-solid fa-music"></i>';
@@ -849,11 +813,9 @@
             }
             isPlaying = !isPlaying;
         }
-
         // Floating Hearts
         const heartsContainer = document.getElementById('heartsBg');
         const heartIcons = ['❤️', '💖', '💕', '🌸', '✨'];
-
         for (let i = 0; i < 20; i++) {
             const heart = document.createElement('div');
             heart.classList.add('heart-particle');
@@ -864,25 +826,20 @@
             heart.style.fontSize = (Math.random() * 15 + 12) + 'px';
             heartsContainer.appendChild(heart);
         }
-
         /* --- FITUR INTERAKTIF TANPA PESAN KEJUTAN --- */
-
         // 1. Interactive Tap Effect (Floating Balloon Heart)
         document.addEventListener('click', function(e) {
             if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
-
             const clickHeart = document.createElement('div');
             clickHeart.className = 'click-heart';
             clickHeart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
             clickHeart.style.left = e.clientX + 'px';
             clickHeart.style.top = e.clientY + 'px';
             document.body.appendChild(clickHeart);
-
             setTimeout(() => {
                 clickHeart.remove();
             }, 1200);
         });
-
         // 2. Interactive Sparkle Trail Effect
         document.addEventListener('mousemove', function(e) {
             if (Math.random() > 0.3) return;
@@ -894,15 +851,14 @@
             sparkle.style.width = size + 'px';
             sparkle.style.height = size + 'px';
             document.body.appendChild(sparkle);
-
             setTimeout(() => {
                 sparkle.remove();
             }, 600);
         });
-
         // 3. Interactive Hug/Love Counter inside letter
         let count = 0;
         function sendLove() {
+            playSound('correct');
             count++;
             document.getElementById('loveCount').innerText = count;
             if (typeof confetti === "function") {
@@ -913,7 +869,6 @@
                 });
             }
         }
-
         // 4. Interactive 3D Polaroid Hover Effect
         document.querySelectorAll('.polaroid-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -922,7 +877,6 @@
                 const y = e.clientY - rect.top - rect.height / 2;
                 card.style.transform = `perspective(500px) rotateX(${-y / 12}deg) rotateY(${x / 12}deg) scale(1.05)`;
             });
-
             card.addEventListener('mouseleave', () => {
                 card.style.transform = '';
             });
